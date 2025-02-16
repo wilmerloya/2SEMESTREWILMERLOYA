@@ -2,6 +2,7 @@
 
 def mostrar_codigo(ruta_script):
     # Asegúrate de que la ruta al script es absoluta
+    import os
     ruta_script_absoluta = os.path.abspath(ruta_script)
     try:
         with open(ruta_script_absoluta, 'r') as archivo:
@@ -18,6 +19,7 @@ def mostrar_codigo(ruta_script):
 
 def ejecutar_codigo(ruta_script):
     try:
+        import os
         if os.name == 'nt':  # Windows
             subprocess.Popen(['cmd', '/k', 'python', ruta_script])
         else:  # Unix-based systems
@@ -78,7 +80,7 @@ def mostrar_sub_menu(ruta_unidad):
             except ValueError:
                 print("Opción no válida. Por favor, intenta de nuevo.")
 
-def mostrar_scripts(ruta_sub_carpeta):
+def mostrar_scripts(ruta_sub_carpeta, os=None):
     scripts = [f.name for f in os.scandir(ruta_sub_carpeta) if f.is_file() and f.name.endswith('.py')]
 
     while True:
@@ -98,6 +100,7 @@ def mostrar_scripts(ruta_sub_carpeta):
             try:
                 eleccion_script = int(eleccion_script) - 1
                 if 0 <= eleccion_script < len(scripts):
+                    import os
                     ruta_script = os.path.join(ruta_sub_carpeta, scripts[eleccion_script])
                     codigo = mostrar_codigo(ruta_script)
                     if codigo:
